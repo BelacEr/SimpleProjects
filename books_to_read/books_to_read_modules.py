@@ -6,14 +6,14 @@ import os
 
 # Global variables.
 filename = "books.json"
-thank_you = "\nThank you for using books-to-read by BelacEr."
+thank_you = "\nThank you for using books-to-read by BelacEr!"
 
 def add_book():
-    """Function to add the book name and the author in the JSON file."""
+    """This function adds the book name and author to the JSON file."""
     try:
         # Ask for the book and author name with try-except for built-in exceptions.
-        book = input("\nEnter the book name: ").strip()
-        author = input("Enter the author name: ").strip()
+        book = input("\Enter the book's name: ").strip()
+        author = input("Enter the author's name: ").strip()
 
     except (KeyboardInterrupt, EOFError):
         print(thank_you)
@@ -45,21 +45,22 @@ def add_book():
 
 
 def read_book():
+    """A function that shows books and their author."""
     try:
         with open(filename, "r") as file:
             loaded_data = json.load(file)
-            print(f"JSON data successfully loaded from {filename}.\n")
+            print(f"The JSON data was successfully loaded from {filename}.\n")
             
             print("Books to read:")
             for book, author in loaded_data.items():
-                print(f"- {book} by {author}")
+                print(f"- {book} by {author}")  # Print the book and author prettier!
 
     except FileNotFoundError:
         print(f"The file '{filename}' was not found.")
     except IOError as e:
-        print(f"Error loading to file {filename}: {e}")
+        print(f"Error loading to file '{filename}': {e}.")
     except json.JSONDecodeError as e:
-        print(f"Error decoding JSON from '{filename}': {e}")
+        print(f"Error decoding JSON from '{filename}': {e}.")
 
 
 def show_menu():
@@ -78,7 +79,7 @@ def exit_journal():
 
 
 def main():
-    """Main functin of the program."""
+    """The main function of the program"""
     menu_options = {
         1: add_book,
         2: read_book,
@@ -88,7 +89,7 @@ def main():
     while True:
         show_menu() # Show the menu of the program.
         try:
-            # Ask for a number that will be used in the menu with try-except for built-in exceptions.
+            # Ask for a number that will be used in the menu with the try-except statement for built-in exceptions.
             choice = int(input("Choose the option: "))
 
             selected_function = menu_options.get(choice)
