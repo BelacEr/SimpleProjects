@@ -8,16 +8,23 @@ import os
 filename = "books.json"
 thank_you = "\nThank you for using books-to-read by BelacEr!"
 
+def get_non_emtpy_input(prompt: str) -> str:
+    """Keep asking until user enter non-emtpy string."""
+    while True:
+        try:
+            value = input(prompt).strip()
+            if value:
+                return value
+            print("Input cannot be empty. Please try again.\n")
+        except (KeyboardInterrupt, EOFError):
+            print(thank_you)
+            sys.exit()
+
+
 def add_book():
     """This function adds the book name and author to the JSON file."""
-    try:
-        # Ask for the book and author name with try-except for built-in exceptions.
-        book = input("\Enter the book's name: ").strip()
-        author = input("Enter the author's name: ").strip()
-
-    except (KeyboardInterrupt, EOFError):
-        print(thank_you)
-        sys.exit() # Exit the program.
+    book = get_non_emtpy_input("Enter the book's name: ")
+    author = get_non_emtpy_input("Enter the author's name: ")
 
     new_data = {book: author}
 
