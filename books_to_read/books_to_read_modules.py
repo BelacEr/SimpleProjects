@@ -38,7 +38,7 @@ def add_book():
         with open(filename, "w") as file:
             json.dump(data, file, indent=4)
 
-        print(f"Book '{book}' by {author} succesfully added to {filename}.")
+        print(f"\nBook '{book}' by {author} succesfully added to {filename}.")
         
     except IOError as e:
         print(f"Error writing to fle '{filename}': {e}")
@@ -80,9 +80,9 @@ def exit_journal():
 def main():
     """Main functin of the program."""
     menu_options = {
-        1, add_book,
-        2, read_book,
-        3, exit_journal,
+        1: add_book,
+        2: read_book,
+        3: exit_journal,
         }
 
     while True:
