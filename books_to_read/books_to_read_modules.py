@@ -8,6 +8,7 @@ import os
 filename = "books.json"
 thank_you = "\nThank you for using books-to-read by BelacEr!"
 
+
 def get_non_emtpy_input(prompt: str) -> str:
     """Keep asking until user enter non-emtpy string."""
     while True:
@@ -37,18 +38,23 @@ def add_book():
                     data = {}   # File is emtpy or corrupted, reset to emtpy dict.
         else:
             data = {}
-    
-        # Update dictionary with new data.
-        data.update(new_data)
-
-        # Write back to file (overwrite with updated data)
-        with open(filename, "w") as file:
-            json.dump(data, file, indent=4)
-
-        print(f"\nBook '{book}' by {author} succesfully added to {filename}.")
         
+        # Check if the book already exists in books.json
+        if book not in data:
+            # Update dictionary with new data.
+            data.update(new_data)
+
+                # Write back to file (overwrite with updated data)
+            with open(filename, "w") as file:
+                json.dump(data, file, indent=4)
+
+            print(f"\nBook '{book}' by {author} succesfully added to {filename}.")
+
+        else:
+            print(f"\nBook '{book}' already exists in {filename}.")
+
     except IOError as e:
-        print(f"Error writing to fle '{filename}': {e}")
+        print(f"Error writing to fle '{filename}': {e}.")
 
 
 def read_book():
@@ -73,7 +79,7 @@ def read_book():
 def delete_book():
     """Delete a specific book by its line number."""
 
-    # Show the books 
+    # Show the books.
     read_book()
     # Ask for a book to delete
     book = get_non_emtpy_input("\nEnter the name of the book you want to delete: ")
@@ -97,7 +103,7 @@ def delete_book():
 
             print(f"\nBook {book} succesfully deleted.")
         else:
-            print(f"Book '{book}' was not found in {filename}.")  
+            print(f"\nBook '{book}' was not found in {filename}.")
 
     except FileNotFoundError:
         print("\nThere's no books to delete from. Write something first.")
