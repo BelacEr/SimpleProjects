@@ -65,10 +65,13 @@ def read_book():
         with open(filename, "r") as file:
             loaded_data = json.load(file)
             print(f"The JSON data was successfully loaded from {filename}.\n")
-
-            print("Books to read:")
-            for book, author in loaded_data.items():
-                print(f"- {book} by {author}")  # Print the book and author prettier!
+            
+            if loaded_data:
+                print("Books to read:")
+                for book, author in loaded_data.items():
+                    print(f"- {book} by {author}")  # Print the book and author prettier!
+            else:
+                print("There are no books.")
 
     except FileNotFoundError:
         print(f"The file '{filename}' was not found.")
@@ -82,7 +85,7 @@ def delete_book():
     """Delete a specific book by searching for its name."""
     # Show the books.
     read_book()
-    # Ask for a book to delete
+    # Ask for a book to delete.
     book = get_non_emtpy_input("\nEnter the name of the book you want to delete: ")
 
     try:
