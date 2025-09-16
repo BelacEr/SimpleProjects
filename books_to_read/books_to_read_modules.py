@@ -70,12 +70,50 @@ def read_book():
         print(f"Error decoding JSON from '{filename}': {e}.")
 
 
+def delete_book():
+    """Delete a specific book by its line number."""
+
+    # Show the books 
+    read_book()
+    # Ask for a book to delete
+    book = get_non_emtpy_input("\nEnter the name of the book you want to delete: ")
+
+    try:
+        # See if books.json exist.
+        if os.path.exists(filename):
+            with open(filename, "r") as file:
+                data = json.load(file)
+        else:
+            print(f"The file '{filename}' doesn't exist.")
+            return  # Exit early.
+
+        if book in data:
+            # Delete the book by its name.
+            del data[book]
+        
+            # Update the JSON file with the new data.
+            with open(filename, 'w') as file:
+                json.dump(data, file, indent=4)
+
+            print(f"\nBook {book} succesfully deleted.")
+        else:
+            print(f"Book '{book}' was not found in {filename}.")  
+
+    except FileNotFoundError:
+        print("\nThere's no books to delete from. Write something first.")
+    except IOError as e:
+        print(f"\nError loading to file '{filename}': {e}.")
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON from '{filename}': {e}.")
+
+
 def show_menu():
     print("""
 ==== BOOKS-TO-READ ====
 1. Add new book
 2. See books
-3. Exit
+3. Delete book
+4. Exit
 """)
 
 
@@ -90,7 +128,8 @@ def main():
     menu_options = {
         1: add_book,
         2: read_book,
-        3: exit_journal,
+        3: delete_book,
+        4: exit_journal,
         }
 
     while True:
