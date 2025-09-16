@@ -17,17 +17,18 @@ def get_non_emtpy_input(prompt: str) -> str:
             if value:
                 return value
             print("Input cannot be empty. Please try again.\n")
+
         except (KeyboardInterrupt, EOFError):   # try-except for built-in exceptions.
             print(thank_you)
             sys.exit()
 
 
 def add_book():
-    """This function adds the book name and author to the JSON file."""
+    """This function adds the name of the book and its author to the JSON file."""
     book = get_non_emtpy_input("Enter the book's name: ")
     author = get_non_emtpy_input("Enter the author's name: ")
 
-    new_data = {book: author}
+    new_data = {book: author} 
 
     try:
         # Check if the file already exists.
@@ -40,12 +41,12 @@ def add_book():
         else:
             data = {}
         
-        # Check if the book already exists in books.json
+        # Check to see if the book already exists in the books.json file.
         if book not in data:
             # Update dictionary with new data.
             data.update(new_data)
 
-                # Write back to file (overwrite with updated data)
+            # Write back to file (overwrite with updated data)
             with open(filename, "w") as file:
                 json.dump(data, file, indent=4)
 
@@ -59,7 +60,7 @@ def add_book():
 
 
 def read_book():
-    """A function that shows books and their author."""
+    """A function that displays books and authors."""
     try:
         with open(filename, "r") as file:
             loaded_data = json.load(file)
@@ -78,7 +79,7 @@ def read_book():
 
 
 def delete_book():
-    """Delete a specific book by the book's name."""
+    """Delete a specific book by searching for its name."""
     # Show the books.
     read_book()
     # Ask for a book to delete
