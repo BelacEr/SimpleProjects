@@ -63,7 +63,7 @@ def read_book():
         with open(filename, "r") as file:
             loaded_data = json.load(file)
             print(f"The JSON data was successfully loaded from {filename}.\n")
-            
+
             print("Books to read:")
             for book, author in loaded_data.items():
                 print(f"- {book} by {author}")  # Print the book and author prettier!
@@ -78,7 +78,6 @@ def read_book():
 
 def delete_book():
     """Delete a specific book by its line number."""
-
     # Show the books.
     read_book()
     # Ask for a book to delete
