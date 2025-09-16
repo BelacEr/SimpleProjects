@@ -17,7 +17,7 @@ def get_non_emtpy_input(prompt: str) -> str:
             if value:
                 return value
             print("Input cannot be empty. Please try again.\n")
-        except (KeyboardInterrupt, EOFError):
+        except (KeyboardInterrupt, EOFError):   # try-except for built-in exceptions.
             print(thank_you)
             sys.exit()
 
@@ -30,6 +30,7 @@ def add_book():
     new_data = {book: author}
 
     try:
+        # Check if the file already exists.
         if os.path.exists(filename):
             with open(filename, "r") as file:
                 try:
@@ -77,7 +78,7 @@ def read_book():
 
 
 def delete_book():
-    """Delete a specific book by its line number."""
+    """Delete a specific book by the book's name."""
     # Show the books.
     read_book()
     # Ask for a book to delete
@@ -87,7 +88,10 @@ def delete_book():
         # See if books.json exist.
         if os.path.exists(filename):
             with open(filename, "r") as file:
-                data = json.load(file)
+                try:
+                    data = json.load(file)
+                except json.JSONDecodeError:
+                    data = {}   # File is emtpy or corrupted, reset to emtpy dict.
         else:
             print(f"The file '{filename}' doesn't exist.")
             return  # Exit early.
@@ -129,7 +133,7 @@ def exit_journal():
 
 
 def main():
-    """The main function of the program"""
+    """The main function of the program."""
     menu_options = {
         1: add_book,
         2: read_book,
