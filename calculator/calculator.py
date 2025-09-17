@@ -73,7 +73,7 @@ def get_number_input(prompt):
 
 
 def main():
-    """The main function of the program"""
+    """The main function of the program."""
     while True:
         show_menu()
         try:
