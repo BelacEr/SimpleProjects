@@ -160,6 +160,6 @@ def main():
 
         except ValueError:
             print("\nPlease make sure to enter a valid number.")
-        except (KeyboardInterrupt ,EOFError):
+        except (KeyboardInterrupt, EOFError):
             print(thank_you)
             return  # Exit early.
