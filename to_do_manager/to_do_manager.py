@@ -5,13 +5,14 @@ import sys
 import os
 
 
-def show_menu():    # The ability to change status will be added.
+def show_menu():
     print("""
 ===== TO-DO LIST MENU =====
 1. Add Task
 2. View Task
-3. Delete Task
-4. Exit
+3. Complete Task 
+4. Delete Task
+5. Exit
 """)
 
 
@@ -87,6 +88,25 @@ def read_tasks():
         print("\nThere are no tasks.")
 
 
+def complete_task():
+    """This function changes the status from "Not Completed" to "Completed."""
+    tasks = read_tasks()        # Show the tasks.
+    data = load_json_data()
+
+    if data:
+        # If there are tasks, you will be prompted to select the one you want to delete.
+        task = get_non_emtpy_input("\nEnter the task that you have finished: ")
+
+        data[task] = "Completed"
+
+        print(f"The task '{task}' has been completed.")
+
+        save_json_data(data)
+    else:
+        # If there are no tasks, you will be redirected to the menu.
+        return  # Since there are no tasks, it will print "There are no tasks."
+    
+
 def delete_task():
     """Delete a specific task by searching for its name."""
     tasks = read_tasks()
@@ -120,8 +140,9 @@ def main():
     menu_options = {
         1: add_task,
         2: read_tasks,
-        3: delete_task,
-        4: exit_program,
+        3: complete_task,
+        4: delete_task,
+        5: exit_program,
     }
     while True:
         show_menu() # Show the menu of the program.
