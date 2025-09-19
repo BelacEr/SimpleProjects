@@ -90,21 +90,25 @@ def read_tasks():
 
 def complete_task():
     """This function changes the status from "Not Completed" to "Completed."""
-    tasks = read_tasks()        # Show the tasks.
+    read_tasks()        # Show the tasks.
     data = load_json_data()
-
+    # If there are tasks not completed, you will be prompted to select the one you want to delete.
     if data:
-        # If there are tasks, you will be prompted to select the one you want to delete.
-        task = get_non_emtpy_input("\nEnter the task that you have finished: ")
+        # Ensure that not all tasks are completed.
+        if all(value == "Completed" for value in data.values()):
+            print("\nAll tasks are completed.")
+        else:
+            # Ask user which taks to mark as completed.
+            task = get_non_emtpy_input("\nEnter the task that you have finished: ")
 
-        data[task] = "Completed"
+            data[task] = "Completed"
 
-        print(f"The task '{task}' has been completed.")
+            print(f"\nThe task '{task}' has been completed.")
 
-        save_json_data(data)
+            save_json_data(data)
     else:
-        # If there are no tasks, you will be redirected to the menu.
-        return  # Since there are no tasks, it will print "There are no tasks."
+        # No tasks.
+        return
     
 
 def delete_task():
@@ -134,6 +138,7 @@ def exit_program():
     """Gracefully exit the pogram."""
     print("\nThank you for using TO-DO MANAGER by BelacEr!")
     sys.exit()
+
 
 def main():
     """The main function of the program."""
